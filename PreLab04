@@ -1,0 +1,83 @@
+/******************************************************************************
+ * Program Name:          Lab04 - Paystub Calculations
+ * Program Description:   This program calculates net paycheck information
+ * Program Author:        Chase Hewitt
+ * Date Created:          02/24/2021
+ ******************************************************************************/
+package lab04;
+
+import java.util.Scanner;
+
+public class Lab04 {
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        //declaring variables 
+        final double SOC_SEC_RATE = 0.06;
+        final double MEDICARE_RATE = 0.01;
+        final double UNION_DUES_RATE = 0.01;
+        final double RETIREMENT_PLAN_RATE = 0.02;
+        final double RETIREMENT_HEALTH_RATE = 0.03;
+
+        //hours worked
+        System.out.print("Please enter number of hours worked in a pay period: ");
+        double hoursWorked = input.nextDouble();
+
+        //pay rate
+        System.out.print("Please enter hourly pay rate: ");
+        double payRate = input.nextDouble();
+
+        //fed tax withholding rate
+        System.out.print("Please enter federal tac withholding rate (e.g. 0.15): ");
+        double fedTaxWithholdingRate = input.nextDouble();
+
+        //state tax withholding rate
+        System.out.print("Please enter state tax withholding rate (e.g. 0.045: ");
+        double stateTaxWithholdingRate = input.nextDouble();
+
+        //Patstub infomation
+        System.out.println("\n************************"
+                + "\n* Paystub Information: *"
+                + "\n************************");
+        System.out.printf("Hours Worked:\t $%.02f%n", hoursWorked);
+        System.out.printf("Pay Rate:\t $%.02f%n", payRate);
+
+        double grossPay;
+
+        if (hoursWorked <= 40) {
+            grossPay = hoursWorked * payRate;
+            System.out.printf("Gross Pay:\t $%.02f%n", grossPay);
+        } else {
+            grossPay = (40 * payRate) + (hoursWorked - 40) * (payRate * 1.5);
+            System.out.printf("Gross Pay:\t $%.02f%n", grossPay);
+        }
+
+        //deductions
+        double fedTaxWithheld = grossPay * fedTaxWithholdingRate;
+        double stateTaxWithheld = grossPay * stateTaxWithholdingRate;
+        double socsecTaxWithheld = grossPay * SOC_SEC_RATE;
+        double medicareTaxWithheld = grossPay * MEDICARE_RATE;
+        double unionDuesWithheld = grossPay * UNION_DUES_RATE;
+        double retirementPlanWithheld = grossPay * RETIREMENT_PLAN_RATE;
+        double retirementHealthWithheld = grossPay * RETIREMENT_HEALTH_RATE;
+        double totalDeductions = fedTaxWithheld + stateTaxWithheld
+                + socsecTaxWithheld + medicareTaxWithheld + unionDuesWithheld
+                + retirementPlanWithheld + retirementHealthWithheld;
+        double netPay = grossPay - totalDeductions;
+
+        //wanted to do all this on one printf just down a line but wouldnt run right with $%.02f%n based on logs
+        System.out.printf("Deductions: \n");
+        System.out.printf("  Federal Tax (15.0%%):\t\t $%.02f%n", fedTaxWithheld);
+        System.out.printf("  State Tax (10.0%%):\t\t $%.02f%n", stateTaxWithheld);
+        System.out.printf("  Social Security Tax (6.0%%):\t $%.02f%n", socsecTaxWithheld);
+        System.out.printf("  Medicare Tax (1.0%%):\t\t $%.02f%n", medicareTaxWithheld);
+        System.out.printf("  Union Dues (1.0%%):\t\t $%.02f%n", unionDuesWithheld);
+        System.out.printf("  Retirement Plan (2.0%%):\t $%.02f%n", retirementPlanWithheld);
+        System.out.printf("  Retirement Health (3.0%%):\t $%.02f%n", retirementHealthWithheld);
+        System.out.printf("Total Deductions:\t\t $%.02f%n", totalDeductions);
+        System.out.printf("\nNet Pay:\t\t\t $%.02f%n", netPay);
+
+    }
+
+}
