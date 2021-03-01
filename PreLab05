@@ -1,0 +1,48 @@
+/******************************************************************************
+ * Program Name:          PreLab05 - With a Challenge
+ * Program Description:   The program will quiz the student on multiplication.
+ * Program Author:        Chase Hewitt
+ * Date Created:          03/1/2021
+ ******************************************************************************/
+package prelab05;
+
+import java.util.Scanner;
+
+public class PreLab05 {
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        double correctCount = 0;
+        int errorCount = 0;
+        int questionCount = 0;
+
+        System.out.println("Enter the number of questions in the quiz: ");
+        int numberOfQuestions = input.nextInt();
+
+        while (questionCount < numberOfQuestions) {
+            int numberOne = (int) (Math.random() * 10);
+            int numberTwo = (int) (Math.random() * 10);
+
+            System.out.print("Question " + (questionCount + 1) + ": What is " + numberOne + " * " + numberTwo + "? ");
+            int answer = input.nextInt();
+
+            if (numberOne * numberTwo == answer) {
+                System.out.println("Correct.");
+                correctCount++;
+            }else{
+                System.out.println("Incorrect. " + numberOne + " * " + numberTwo + " = " + numberOne * numberTwo);
+                errorCount++;
+            }
+            questionCount++;
+        } 
+        System.out.printf("You got " + errorCount + " wrong. your score is %.01f" , (correctCount / numberOfQuestions) * 100);
+       
+        if(errorCount == 0){
+            System.out.print(". Congratulations!\n");
+        }
+        else
+            //This is to get the BUILD SUCCESFUL on the line below
+            System.out.println(" ");
+    }
+}
