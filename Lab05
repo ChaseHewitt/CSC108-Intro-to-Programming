@@ -1,0 +1,105 @@
+/** ****************************************************************************
+ * Program Name:          Lab05 - Play10 Lottery game
+ * Program Description:   Simulates a lottery game that generates a random
+ *                        integer between 1 and 10
+ * Program Author:        Chase Hewitt
+ * Date Created:          03/3/2021
+ ***************************************************************************** */
+package lab05;
+
+import java.util.Scanner;
+
+public class Lab05 {
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int ticketsPurchased, winningNumber;
+        double TICKET_PRICE = 2.0, payoutPrice = 20.0;
+        int min = 1, max = 10;
+        double totalTicketPrice, winningPrice, inputCharge, losingPrice, numTicketsWon;
+        String result, choice;
+        int ticketNumbers[];
+
+        System.out.println("Welcome to the State of Connecticut Play10 Lottery Game. Ticket Price: $" + TICKET_PRICE);
+
+        System.out.println("How many tickets would you like to purchase?");
+        ticketsPurchased = input.nextInt();
+        totalTicketPrice = ticketsPurchased * TICKET_PRICE;
+
+        ticketNumbers = new int[ticketsPurchased];
+
+        // confirm the input charge from user
+        System.out.printf("Please enter %.1f to confirm your credit card charge:\n", totalTicketPrice);
+        inputCharge = input.nextDouble();
+
+        while (inputCharge != totalTicketPrice) {
+            System.out.printf("Invalid. Please enter %.1f to confirm your credit card charge:\n", totalTicketPrice);
+            inputCharge = input.nextDouble();
+        }
+        input.nextLine();
+        System.out.printf("Thank you. Your credit card will be charged $%.1f\n", totalTicketPrice);
+        
+        // input of whether the user will generate the guess or random guesses
+        System.out.println("Would you like the computer to generate your guesses? Enter 'Y' or 'N': ");
+        choice = input.nextLine();
+
+        while (!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n")) {
+            System.out.println("Invalid input. Would you like the computer to generate your guesses? Enter 'Y' or 'N': ");
+            choice = input.nextLine();
+        }
+
+        // randomly generate the ticket numbers
+        if (choice.equalsIgnoreCase("y")) {
+            for (int i = 0; i < ticketNumbers.length; i++) {
+                ticketNumbers[i] = (int) (Math.random() * ((max - min))) + 1;
+                System.out.println("Ticket " + (i + 1) + "'s guess is " + ticketNumbers[i]);
+            }
+        } else
+        {
+            for (int i = 0; i < ticketNumbers.length; i++) {
+                System.out.println("Please enter guess " + (i + 1) + ": ");
+                ticketNumbers[i] = input.nextInt();
+                while (ticketNumbers[i] < 1 || ticketNumbers[i] > 10) {
+                    System.out.println("Invalid guess. Please re-enter a guess between 1 and 10: ");
+                    ticketNumbers[i] = input.nextInt();
+                }
+
+            }
+        }
+
+        // randomly generate the winning ticket number
+        winningNumber = (int) (Math.random() * ((max - min))) + 1;
+        System.out.println("\nThe winning number is " + winningNumber);
+        result = "";
+
+        numTicketsWon = 0;
+        for (int i = 0; i < ticketNumbers.length; i++) {
+            if (ticketNumbers[i] == winningNumber) {
+                result += "Ticket " + (i + 1) + " is a winner\n";
+                numTicketsWon++;
+            }
+        }
+
+        winningPrice = numTicketsWon * payoutPrice;
+        System.out.println(result);
+        System.out.printf("Your total winnings is $%.1f", winningPrice);
+
+        
+        losingPrice = (ticketsPurchased - numTicketsWon) * TICKET_PRICE;
+        winningPrice -= totalTicketPrice;
+
+        System.out.printf("\nAfter your credit card deduction, your balance is $%.1f", winningPrice);
+
+        //prints the allowable deduction
+        double allowableDeduction;
+        if (winningPrice <= losingPrice) {
+            allowableDeduction = winningPrice;
+        }
+        else{
+            allowableDeduction = losingPrice;
+        }
+        System.out.printf("\nYou can deduct the cost of your losses ($%.1f) up to the amount of your winnings ($%.1f) from your taxes", losingPrice, winningPrice);
+        System.out.printf("\nAllowable deduction: $%.1f%n", losingPrice);
+    }
+
+}
