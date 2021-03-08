@@ -1,0 +1,34 @@
+/** ****************************************************************************
+ * Program Name:          PreLab05A - Integer Patterns
+ * Program Description:   Creates a print pattern based on integer inputed.
+ * Program Author:        Chase Hewitt
+ * Date Created:          03/8/2021
+ ***************************************************************************** */
+package prelab05a;
+import java.util.Scanner;
+
+public class PreLab05A {
+    public static void main(String[] args) {
+    Scanner input = new Scanner(System.in);
+    System.out.println("Enter an integer between 1 and 9, inclusive: ");
+    int maxcount = input.nextInt();
+    while (maxcount < 1 || maxcount > 9){
+    System.out.println("Incorrect. Enter an integer between 1 and 9, inclusive: ");
+    maxcount = input.nextInt();
+    }
+        int totalIntegersWritten = 0;
+        int totalSum = 0;
+        System.out.print("\n");
+        for (int rowCtr = 1; rowCtr <= maxcount; rowCtr++){
+            for (int colCtr = 1; colCtr <= rowCtr; colCtr++){
+            totalIntegersWritten++;
+            totalSum = totalSum + rowCtr;
+            System.out.print(rowCtr);
+        }
+        System.out.print("\n");
+    }
+        System.out.println("The total number of integers writtern:\t" + totalIntegersWritten);
+        System.out.println("The total sum of all integers:\t\t" + totalSum);
+        
+ }
+}
