@@ -1,0 +1,85 @@
+/******************************************************************************
+ * Program Name:          Lab05A - ISBN-10 and ISBN=13
+ * Program Description:   asks for first 9 or 12 digits of an ISBM number as 
+ *                        a string
+ * Program Author:        Chase Hewitt
+ * Date Created:          03/10/2021
+ ******************************************************************************/
+import java.util.*;
+
+class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // empty strings to carry all isbns
+        String isbn10 = "";
+        String isbn13 = "";
+
+        //loops indefinitley
+        while (true) {
+
+            System.out.print("Enter the first 9 or 12-digits of an ISBN number. Enter QUIT to exit: ");
+            String input = scanner.next();
+
+            //checks in quit is entered
+            if ((input).toLowerCase().equals("quit")) {
+                break;
+            }
+            //checks if input length is other than 9 or 12
+            if (!(input.length() == 12 || input.length() == 9)) {
+                System.out.println(input + " is an invalid input");
+                continue;
+            }
+            try {
+                Integer.parseInt(input.substring(0, 1));
+            } catch (NumberFormatException e) {
+                System.out.println(input + " is an invalid input");
+                continue;
+            }
+            if (input.length() == 9) {
+                isbn10 = isbn10 + getCompleteISBN(input) + "\n";
+            } else {
+                isbn13 = isbn13 + getCompleteISBN(input) + "\n";
+            }
+        }
+        System.out.println("The ISBN-10 numbers are: ");
+        System.out.println(isbn10);
+        System.out.println("The ISBN-13 numbers are: ");
+        System.out.println(isbn13);
+    }
+
+    static String getCompleteISBN(String isbn) {
+        int sum = 0;
+
+        for (int i = 0; i < isbn.length(); i++) {
+            int c = isbn.charAt(i);
+            c = c - 48;
+
+            if (isbn.length() == 12 && (i + 1) % 2 == 0) {
+                sum = sum + c * (3);
+            } else if (isbn.length() == 12 && (i + 1) % 2 != 0) {
+                sum = sum + c;
+            } else {
+                sum = sum + c * (i + 1);
+            }
+        }
+        if (isbn.length() == 9) {
+            int checksum = sum % 11;
+            if (checksum == 10) {
+                isbn = isbn + "X";
+            } else {
+                isbn = isbn + checksum;
+            }
+        }
+        if (isbn.length() == 12) {
+            int checksum = 10 - (sum % 10);
+            if (checksum == 10) {
+                isbn = isbn + "0";
+            } else {
+                isbn = isbn + checksum;
+            }
+        }
+        return isbn;
+    }
+}
