@@ -1,13 +1,15 @@
-/******************************************************************************
+/** ****************************************************************************
  * Program Name:          Lab05A - ISBN-10 and ISBN=13
- * Program Description:   asks for first 9 or 12 digits of an ISBM number as 
+ * Program Description:   asks for first 9 or 12 digits of an ISBM number as
  *                        a string
  * Program Author:        Chase Hewitt
  * Date Created:          03/10/2021
- ******************************************************************************/
+ ***************************************************************************** */
+package lab05a;
+
 import java.util.*;
 
-class Main {
+public class Lab05A {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
